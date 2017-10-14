@@ -97,8 +97,11 @@ bindsym $mod+a focus parent
 # focus the child container
 bindsym $mod+z focus child
 
+# Screenshots!
+bindysm Print exec "scrot ~psp/Pictures/screenshots/Full-`date -Iseconds`.png"
+# bindysm $mod+Shift+o exec "scrot $HOME/Pictures/screenshots/Full-`date -Iseconds`.png"
+
 # switch to workspace
-bindsym $mod+m workspace "♪"
 set $workspace1 "1:"
 set $workspace2 "2:"
 set $workspace3 "3:"
@@ -163,6 +166,8 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Lock command
+bindsym $mod+Shift+p exec "i3lock -efc 333333"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -177,7 +182,7 @@ bar {
         tray_padding 0
         tray_output primary
         colors {
-              background #222222
+              background #333333
               statusline #00ffff
               # statusline #ffff00
               separator #ff6666
