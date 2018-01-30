@@ -17,7 +17,8 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono, Awesome 8
+font pango:DejaVu Sans Mono, Awesome 6
+
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -88,8 +89,14 @@ bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
+# Toggle sticky
+bindsym $mod+Shift+s sticky toggle
+
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
+
+# Pop out youtube
+bindsym $mod+Shift+y fullscreen disable; floating enable; resize set 400 300; sticky enable; move window to position 20 20;
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -104,9 +111,9 @@ bindsym $mod+z focus child
 # switch to workspace
 set $workspace1 "1:"
 set $workspace2 "2:"
-set $workspace3 "3:"
+set $workspace3 "3:"
 set $workspace8 "8"
-set $workspace9 "9"
+set $workspace9 "9:"
 set $workspace10 "10:"
 set $binfolder "~/.i3/bin"
 bindsym $mod+1 workspace $workspace1
@@ -176,7 +183,7 @@ bar {
         i3bar_command i3bar
         # status_command i3blocks -c ~psp/.i3/i3blocks.conf
         # font pango:DejaVu Sans Mono, Awesome 10
-        font pango:Iosevka Bold, Awesome 9
+        font pango:Iosevka Bold, Awesome 6
         status_command i3blocks -c /home/psp/.i3/i3blocks.conf
         position top
         strip_workspace_numbers yes
@@ -189,11 +196,11 @@ bar {
               # statusline #ffff00
               separator #ff6666
 
-              focused_workspace  #4cff00 #00ee00 #3000ff
-              active_workspace   #333333 #5f676a #ffff00
-              inactive_workspace #333333 #222222 #88ff88
-              urgent_workspace   #2f343a #900000 #ffffff
-              binding_mode       #2f343a #900000 #ffffff
+              # focused_workspace  #4cff00 #00ee00 #3000ff
+              # active_workspace   #333333 #5f676a #ffff00
+              # inactive_workspace #333333 #222222 #88ff88
+              # urgent_workspace   #2f343a #900000 #ffffff
+              # binding_mode       #2f343a #900000 #ffffff
         }
 }
 
@@ -210,6 +217,12 @@ bindsym XF86AudioMute exec amixer -q set Master mute
 bindsym $mod+comma workspace prev
 bindsym $mod+period workspace next
 
+# Play/pause
+bindsym $mod+Ctrl+space exec playerctl play-pause
+bindsym XF86AudioMicMute exec playerctl play-pause
+
+# Touchpad toggle
+bindsym XF86Tools exec ~psp/.scripts/toggle-touchpad.sh
 
 # Set workspace name
 bindsym $mod+t exec i3-input -F 'rename workspace to %s' -P 'New name: '
@@ -220,6 +233,8 @@ bindsym $mod+y move workspace to output left
 assign [class="Google-chrome"] → $workspace2
 assign [class="Emacs"] → $workspace3
 assign [class="Spotify"] → $workspace10
+assign [class="Musixmatch"] → $workspace10
+assign [class="Steam"] → $workspace9
 # for_window [class="Google-chrome"] move to $workspace2
 # for_window [class="Emacs"] move to $workspace3
 # for_window [class="Spotify"] move to $workspace10
@@ -227,5 +242,8 @@ assign [class="Spotify"] → $workspace10
 # startup stuff
 exec --no-startup-id i3-msg 'workspace 1:; exec gnome-terminal'
 exec --no-startup-id i3-msg 'workspace 2:; exec google-chrome-stable; layout tabbed;'
-exec --no-startup-id i3-msg 'workspace 3:; exec emacs'
+
+exec --no-startup-id i3-msg 'workspace 3:; exec emacs'
 exec --no-startup-id i3-msg 'workspace 10:; exec spotify'
+exec --no-startup-id i3-msg 'workspace 10:; exec musixmatch'
+exec "setxkbmap -option caps:escape"
